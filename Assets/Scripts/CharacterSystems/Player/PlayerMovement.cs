@@ -29,22 +29,19 @@ namespace CharacterSystems.Player
 
         void Update()
         {
-            HandleDash();
-
-            if (_isDashing)
-            {
-                _controller.Move(_lastMoveDirection * (dashSpeed * Time.deltaTime));
-                return;
-            }
-
-            Move();
         }
 
-        void Move()
+        public void MoveUpdate()
         {
-            Vector2 moveInput = _input.MoveInput;
+            HandleDash();
 
-            Vector3 move = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+            if (!_isDashing) return;
+            _controller.Move(_lastMoveDirection * (dashSpeed * Time.deltaTime));
+        }
+
+        public void Move(Vector2 input)
+        {
+            Vector3 move = new Vector3(input.x, 0, input.y).normalized;
 
             if (move.magnitude > 0.1f)
             {
