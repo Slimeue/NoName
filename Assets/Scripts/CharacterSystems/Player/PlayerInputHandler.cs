@@ -37,16 +37,33 @@ namespace CharacterSystems.Player
             AttackPressed = context.performed;
         }
 
-        public void OnLook(InputAction.CallbackContext context) { }
-        public void OnInteract(InputAction.CallbackContext context) { }
-        public void OnCrouch(InputAction.CallbackContext context) { }
+        public void OnLook(InputAction.CallbackContext context)
+        {
+        }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+        }
+
+        public void OnCrouch(InputAction.CallbackContext context)
+        {
+        }
 
         public void OnDash(InputAction.CallbackContext context)
         {
             DashPressed = context.performed;
         }
-        public void OnPrevious(InputAction.CallbackContext context) { }
-        public void OnNext(InputAction.CallbackContext context) { }
-        public void OnSprint(InputAction.CallbackContext context) { }
+
+        public void OnPrevious(InputAction.CallbackContext context)
+        {
+        }
+
+        public void OnNext(InputAction.CallbackContext context)
+        {
+        }
+
+        public void OnSprint(InputAction.CallbackContext context)
+        {
+        }
     }
 }

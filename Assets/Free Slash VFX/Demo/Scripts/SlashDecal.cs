@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MaykerStudio.VFX
@@ -7,17 +5,13 @@ namespace MaykerStudio.VFX
     [ExecuteAlways]
     public class SlashDecal : MonoBehaviour
     {
-        [SerializeField]
-        private float decalOffsetY = 0;
+        [SerializeField] private float decalOffsetY;
 
-        [SerializeField]
-        private float maxDistance = 0.5f;
+        [SerializeField] private float maxDistance = 0.5f;
 
-        [SerializeField]
-        private Vector3 rotation;
+        [SerializeField] private Vector3 rotation;
 
-        [SerializeField]
-        private ParticleSystem slash;
+        [SerializeField] private ParticleSystem slash;
 
         public float capsuleHeight = 2f;
         public float capsuleRadius = 0.2f;
@@ -26,7 +20,7 @@ namespace MaykerStudio.VFX
 
         private CapsuleCollider slashCollider;
 
-        void Start()
+        private void Start()
         {
             decal = GetComponent<ParticleSystem>();
             decal.Stop(false);
@@ -34,18 +28,15 @@ namespace MaykerStudio.VFX
             slashCollider = slash.GetComponent<CapsuleCollider>();
         }
 
-        void Update()
+        private void Update()
         {
             if (!slash || !decal || !slash.isPlaying)
                 return;
 
-            if (IsGrounded(out Vector3 hit))
+            if (IsGrounded(out var hit))
             {
                 transform.SetPositionAndRotation(hit + decalOffsetY * Vector3.up, Quaternion.Euler(rotation));
-                if (!decal.isPlaying)
-                {
-                    decal.Play(true);
-                }
+                if (!decal.isPlaying) decal.Play(true);
             }
             else if (decal.isPlaying)
             {
@@ -53,37 +44,12 @@ namespace MaykerStudio.VFX
             }
         }
 
-        bool IsGrounded(out Vector3 collisionPoint)
-        {
-            collisionPoint = Vector3.zero;
-
-            Quaternion rotation = slash.transform.rotation;
-            Vector3 up = rotation * Vector3.right;
-            Vector3 position = slash.transform.position;
-
-            Vector3 point1 = position + up * (capsuleHeight / 2 - capsuleRadius);
-            Vector3 point2 = position - up * (capsuleHeight / 2 - capsuleRadius);
-
-            if (Physics.CapsuleCast(point1, point2, capsuleRadius, -up, out RaycastHit hit, maxDistance))
-            {
-                collisionPoint = hit.point;
-                return true;
-            }
-            else if (Physics.CapsuleCast(point1, point2, capsuleRadius, up, out hit, maxDistance))
-            {
-                collisionPoint = hit.point;
-                return true;
-            }
-
-            return false;
-        }
-
-        void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             if (!slash)
                 return;
 
-            if (IsGrounded(out Vector3 hit))
+            if (IsGrounded(out var hit))
             {
                 Gizmos.color = Color.green;
                 Gizmos.DrawRay(slash.transform.position, Vector3.down * maxDistance);
@@ -96,12 +62,12 @@ namespace MaykerStudio.VFX
             }
 
             Gizmos.color = Color.green;
-            Vector3 position = slash.transform.position;
-            Quaternion rotation = slash.transform.rotation;
-            Vector3 up = rotation * Vector3.right;
+            var position = slash.transform.position;
+            var rotation = slash.transform.rotation;
+            var up = rotation * Vector3.right;
 
-            Vector3 point1 = position + up * (capsuleHeight / 2 - capsuleRadius);
-            Vector3 point2 = position - up * (capsuleHeight / 2 - capsuleRadius);
+            var point1 = position + up * (capsuleHeight / 2 - capsuleRadius);
+            var point2 = position - up * (capsuleHeight / 2 - capsuleRadius);
 
             Gizmos.DrawWireSphere(point1, capsuleRadius);
             Gizmos.DrawWireSphere(point2, capsuleRadius);
@@ -110,6 +76,31 @@ namespace MaykerStudio.VFX
             Gizmos.DrawLine(point1 + Vector3.forward * capsuleRadius, point2 + Vector3.forward * capsuleRadius);
             Gizmos.DrawLine(point1 - Vector3.forward * capsuleRadius, point2 - Vector3.forward * capsuleRadius);
         }
-    }
 
+        private bool IsGrounded(out Vector3 collisionPoint)
+        {
+            collisionPoint = Vector3.zero;
+
+            var rotation = slash.transform.rotation;
+            var up = rotation * Vector3.right;
+            var position = slash.transform.position;
+
+            var point1 = position + up * (capsuleHeight / 2 - capsuleRadius);
+            var point2 = position - up * (capsuleHeight / 2 - capsuleRadius);
+
+            if (Physics.CapsuleCast(point1, point2, capsuleRadius, -up, out var hit, maxDistance))
+            {
+                collisionPoint = hit.point;
+                return true;
+            }
+
+            if (Physics.CapsuleCast(point1, point2, capsuleRadius, up, out hit, maxDistance))
+            {
+                collisionPoint = hit.point;
+                return true;
+            }
+
+            return false;
+        }
+    }
 }

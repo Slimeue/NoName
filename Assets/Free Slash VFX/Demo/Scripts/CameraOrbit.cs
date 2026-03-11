@@ -6,21 +6,20 @@ using UnityEngine.InputSystem;
 
 namespace MaykerStudio.Demo
 {
-
     public class CameraOrbit : MonoBehaviour
     {
-        [Header("Settings")]
-        public float rotationSpeed = 5f;
+        [Header("Settings")] public float rotationSpeed = 5f;
+
         public float zoomSpeed = 5f;
         public float verticalAngleMin = -80f;
         public float verticalAngleMax = 80f;
 
-        [Header("References")]
-        public Transform cameraTransform;
+        [Header("References")] public Transform cameraTransform;
+
+        private Vector2 _currentRotation;
+        private float _currentZoom;
 
         private Vector3 _initialOffset;
-        private float _currentZoom;
-        private Vector2 _currentRotation;
 
         public void Start()
         {
@@ -30,12 +29,12 @@ namespace MaykerStudio.Demo
             _currentRotation = transform.eulerAngles;
         }
 
-        void Update()
+        private void Update()
         {
             HandleRotation();
         }
 
-        void HandleRotation()
+        private void HandleRotation()
         {
 #if ENABLE_INPUT_SYSTEM
             if (!EventSystem.current.IsPointerOverGameObject() && Mouse.current.leftButton.isPressed)
@@ -46,8 +45,8 @@ namespace MaykerStudio.Demo
                 Cursor.lockState = CursorLockMode.Locked;
 
                 // Get mouse input
-                float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
-                float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
+                var mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+                var mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
 
                 // Calculate new rotation
                 _currentRotation.x -= mouseY;

@@ -4,35 +4,47 @@ namespace CharacterSystems.Player
 {
     public class PlayerAnimationController : MonoBehaviour
     {
+        public delegate void AttackFinished();
+        public event AttackFinished OnAttackFinished;
+
+        private static readonly int MoveHash = Animator.StringToHash("Move");
+        private static readonly int DashHash = Animator.StringToHash("Dash");
+        private static readonly int AttackHash = Animator.StringToHash("Attack");
+
         private Animator _animator;
-        private PlayerMovement _movement;
 
-        private readonly int _moveSpeedHash = Animator.StringToHash("Move");
-        private readonly int _dashHash = Animator.StringToHash("Dash");
-
-        void Awake()
+        private void Awake()
         {
             _animator = GetComponent<Animator>();
-            if(!_animator)
+
+            if (!_animator)
                 _animator = GetComponentInChildren<Animator>();
-            _movement = GetComponent<PlayerMovement>();
         }
 
-        void Update()
+        public void SetMoveSpeed(float speed)
         {
-            UpdateMovementAnimation();
-        }
-
-        void UpdateMovementAnimation()
-        {
-            float speed = _movement.CurrentSpeed;
-
-            _animator.SetFloat(_moveSpeedHash, speed);
+            _animator.SetFloat(MoveHash, speed);
         }
 
         public void PlayDash()
         {
-            _animator.SetTrigger(_dashHash);
+            _animator.SetTrigger(DashHash);
+        }
+
+        public void PlayAttack()
+        {
+            _animator.SetTrigger(AttackHash);
+        }
+
+        public void OverrideController(AnimatorOverrideController controller)
+        {
+            _animator.runtimeAnimatorController = controller;
+        }
+
+        public void AttackFinishedEvent()
+        {
+            Debug.Log("OnAttackFinished Event");
+            OnAttackFinished?.Invoke();
         }
     }
 }

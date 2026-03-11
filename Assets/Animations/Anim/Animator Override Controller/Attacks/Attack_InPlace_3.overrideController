@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Attack_InPlace_3
+  m_Controller: {fileID: 9100000, guid: bff6292e2ecc97140babbff9f4a8243d, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 64c1e08e62ef76e4a8b23bdc28228504, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 71b8f1be736c20f419129d0644216a24, type: 2}

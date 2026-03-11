@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4adfbd8775334eb897b2e38bffec034a, type: 3}
+  m_Name: Attack_Move_1
+  m_EditorClassIdentifier: Assembly-CSharp::ScriptableObjects.AttackSO
+  animatorOverrideController: {fileID: 22100000, guid: 4d810233d2fbd9d4c95b120e2fbf4107, type: 2}
+  damage: 5
+  knockback: 0
+  forwardMovement: 0
+  nextAttack: {fileID: 11400000, guid: c8578243c58c2ad4195b279e63876bfb, type: 2}

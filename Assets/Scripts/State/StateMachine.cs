@@ -4,9 +4,8 @@ namespace State
 {
     public class StateMachine<T>
     {
-        private IState<T> _currentState;
-
         private readonly T _context;
+        private IState<T> _currentState;
 
         public StateMachine(T context)
         {

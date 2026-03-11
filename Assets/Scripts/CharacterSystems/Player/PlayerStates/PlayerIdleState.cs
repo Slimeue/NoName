@@ -14,16 +14,11 @@ namespace CharacterSystems.Player.PlayerStates
         {
             var input = context.PlayerInputHandler;
 
-            if (input.MoveInput.magnitude > 0.1f)
-            {
-                context.ChangeState(context.PlayerMoveState);
-                return;
-            }
+            if (input.MoveInput.magnitude > 0.1f) context.ChangeState(context.PlayerMoveState);
 
-            // if (input.AttackPressed)
-            // {
-            //     context.ChangeState(context.PlayerAttackState);
-            // }
+            if (input.DashPressed && context.PlayerMovement.CanDash) context.ChangeState(context.PlayerDashState);
+            
+            if(input.AttackPressed) context.ChangeState(context.PlayerAttackState);
         }
 
         public void OnExit(PlayerStateMachine context)
