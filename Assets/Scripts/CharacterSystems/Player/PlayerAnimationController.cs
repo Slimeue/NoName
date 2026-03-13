@@ -31,7 +31,7 @@ namespace CharacterSystems.Player
             _animator.SetTrigger(DashHash);
         }
 
-        public void PlayAttack()
+        public void PlayAttackAnimation()
         {
             _animator.SetTrigger(AttackHash);
         }
@@ -41,10 +41,21 @@ namespace CharacterSystems.Player
             _animator.runtimeAnimatorController = controller;
         }
 
+        public void PlayAttack()
+        {
+            _animator.ResetTrigger(AttackHash);
+            _animator.SetTrigger(AttackHash);
+        }
+
+        public AnimatorStateInfo GetStateInfo()
+        {
+            return _animator.GetCurrentAnimatorStateInfo(0);
+        }
         public void AttackFinishedEvent()
         {
             Debug.Log("OnAttackFinished Event");
             OnAttackFinished?.Invoke();
         }
+        
     }
 }

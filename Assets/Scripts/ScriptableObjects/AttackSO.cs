@@ -9,9 +9,10 @@ namespace ScriptableObjects
 
         public float damage;
         public float knockback;
-
         public float forwardMovement;
 
+        public float comboFrameDuration;
+        
         public AttackSO nextAttack;
     }
 }

@@ -7,45 +7,57 @@ namespace CharacterSystems.Player.Combat
     {
         public AttackSO inPlaceCombo;
         public AttackSO moveCombo;
-        private bool _comboQueued;
+        
+        private const string InPlaceComboHash = "_inPlaceCombo";
 
+        [SerializeField]
+        private float comboCounter;
+
+        private float _lastComboEnd;
+        private const float ComboCount = 3;
+
+        [SerializeField]
+        private float lastAttackPressed;
+        [SerializeField] 
+        private float comboInputWindow;
+        private bool _isAttacking;
         private AttackSO _currentAttack;
-
         private PlayerAnimationController _playerAnimationController;
 
-        public void StartAttack(bool isMoving, PlayerAnimationController playerAnimationController)
-        {
-            _currentAttack = isMoving ? moveCombo : inPlaceCombo;
+        public AttackSO CurrentAttack => _currentAttack;
+        public bool IsAttacking => _isAttacking;
 
+
+        public void Initialize(PlayerAnimationController playerAnimationController)
+        {
             _playerAnimationController = playerAnimationController;
-
-            PlayAttack(playerAnimationController);
         }
 
-        public void QueueNextAttack()
+        public void StartAttack()
         {
-            _comboQueued = true;
+            _playerAnimationController.PlayAttackAnimation();
         }
 
-// AttackComponent.cs
-        public bool OnAttackFinished()
+        public bool UpdateAttack()
         {
-            if (_comboQueued && _currentAttack.nextAttack != null)
+            if (Time.time - _lastComboEnd > 0.5f && comboCounter <= ComboCount)
             {
-                _currentAttack = _currentAttack.nextAttack;
-                _comboQueued = false;
-                PlayAttack(_playerAnimationController);
-                _playerAnimationController.PlayAttack();
-                return true; // combo continued
+                if (Time.time - lastAttackPressed > comboInputWindow)
+                {
+                    var animationClip = _playerAnimationController.GetStateInfo();
+                    comboCounter++;
+                    lastAttackPressed = Time.time;
+                    var length = animationClip.normalizedTime;
+                    _playerAnimationController.PlayAttackAnimation();
+                    if (comboCounter <= ComboCount) return true;
+                    comboCounter = 0;
+                    return false;
+                }
             }
             
-            _comboQueued = false;
-            return false; // no combo, attack ended
+            return true;
         }
+        
 
-        private void PlayAttack(PlayerAnimationController playerAnimationController)
-        {
-            playerAnimationController.OverrideController(_currentAttack.animatorOverrideController);
-        }
     }
 }

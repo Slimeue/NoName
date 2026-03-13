@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Attack_InPlace_1
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableObjects.AttackSO
   animatorOverrideController: {fileID: 22100000, guid: ed94dca7f683122469d9cf0070f341a6, type: 2}
+  comboWindowStart: 0.35
+  comboWindowEnd: 0.75
+  attackEndTime: 0.95
   damage: 5
   knockback: 0
-  forwardMovement: 0
   nextAttack: {fileID: 11400000, guid: 3ed7dff3c58bbf144a81ba97f2b269d0, type: 2}
